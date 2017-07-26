@@ -184,7 +184,7 @@ func (c *client) RoundTrip(req *http.Request) (*http.Response, error) {
 		requestedGzip = true
 	}
 	// TODO: add support for trailers
-	endStream := !hasBody
+	endStream := !hasBody && req.Method != http.MethodConnect
 	err = c.requestWriter.WriteRequest(req, dataStream.StreamID(), endStream, requestedGzip)
 	if err != nil {
 		_ = c.closeWithError(err)
