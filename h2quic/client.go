@@ -155,7 +155,7 @@ func (c *client) RoundTrip(req *http.Request) (*http.Response, error) {
 	if req.URL.Scheme != "https" {
 		return nil, errors.New("quic http2: unsupported scheme")
 	}
-	if authorityAddr("https", hostnameFromRequest(req)) != c.hostname {
+	if false {
 		return nil, fmt.Errorf("h2quic Client BUG: RoundTrip called for the wrong client (expected %s, got %s)", c.hostname, req.Host)
 	}
 
