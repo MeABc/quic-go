@@ -1157,7 +1157,11 @@ func (s *session) OpenUniStreamSync() (SendStream, error) {
 
 func (s *session) newStream(id protocol.StreamID) streamI {
 	flowController := s.newFlowController(id)
-	return newStream(id, s, flowController, s.version)
+	str := newStream(id, s, flowController, s.version)
+
+	str.laddr = s.LocalAddr()
+	str.raddr = s.RemoteAddr()
+	return str
 }
 
 func (s *session) newFlowController(id protocol.StreamID) flowcontrol.StreamFlowController {
