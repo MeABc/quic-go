@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"strings"
 	"sync"
@@ -176,4 +177,27 @@ func validMethod(method string) bool {
 // copied from net/http/http.go
 func isNotToken(r rune) bool {
 	return !httpguts.IsTokenRune(r)
+}
+
+// CloseConnections remove clients according the net.Addr
+func (r *RoundTripper) CloseConnection(f func(raddr net.Addr) bool) {
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
+
+	if f == nil {
+		r.Close()
+		return
+	}
+
+	keys := make([]string, 0)
+	for k, c := range r.clients {
+		session := c.(*client).session
+		if session != nil && f(session.RemoteAddr()) {
+			go session.CloseWithError(1, errors.New("h2quic: CloseConnections called"))
+			keys = append(keys, k)
+		}
+	}
+	for _, k := range keys {
+		delete(r.clients, k)
+	}
 }
