@@ -214,6 +214,14 @@ func (s *Server) handleRequest(session streamCreator, headerStream quic.Stream, 
 
 		req.RemoteAddr = session.RemoteAddr().String()
 
+		cs := session.ConnectionState()
+		req.TLS = &tls.ConnectionState{
+			HandshakeComplete: cs.HandshakeComplete,
+			ServerName:        cs.ServerName,
+			PeerCertificates:  cs.PeerCertificates,
+			Version:           0x0304,
+		}
+
 		responseWriter := newResponseWriter(headerStream, headerStreamMutex, dataStream, protocol.StreamID(h2headersFrame.StreamID), s.logger)
 
 		handler := s.Handler

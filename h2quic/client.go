@@ -254,6 +254,14 @@ func (c *client) RoundTrip(req *http.Request) (*http.Response, error) {
 		}
 	}
 
+	cs := c.session.ConnectionState()
+	req.TLS = &tls.ConnectionState{
+		HandshakeComplete: cs.HandshakeComplete,
+		ServerName:        cs.ServerName,
+		PeerCertificates:  cs.PeerCertificates,
+		Version:           0x0304,
+	}
+
 	res.Request = req
 	return res, nil
 }
