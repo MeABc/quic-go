@@ -10,11 +10,11 @@ import (
 	"sync"
 
 	"github.com/bifurcation/mint"
-	"github.com/lucas-clemente/quic-go/internal/handshake"
-	"github.com/lucas-clemente/quic-go/internal/protocol"
-	"github.com/lucas-clemente/quic-go/internal/utils"
-	"github.com/lucas-clemente/quic-go/internal/wire"
-	"github.com/lucas-clemente/quic-go/qerr"
+	"github.com/MeABc/quic-go/internal/handshake"
+	"github.com/MeABc/quic-go/internal/protocol"
+	"github.com/MeABc/quic-go/internal/utils"
+	"github.com/MeABc/quic-go/internal/wire"
+	"github.com/MeABc/quic-go/qerr"
 )
 
 type client struct {

@@ -3,9 +3,9 @@ package quic
 import (
 	"io"
 
-	"github.com/lucas-clemente/quic-go/internal/flowcontrol"
-	"github.com/lucas-clemente/quic-go/internal/protocol"
-	"github.com/lucas-clemente/quic-go/internal/wire"
+	"github.com/MeABc/quic-go/internal/flowcontrol"
+	"github.com/MeABc/quic-go/internal/protocol"
+	"github.com/MeABc/quic-go/internal/wire"
 )
 
 type cryptoStream interface {
